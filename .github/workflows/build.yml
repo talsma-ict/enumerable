@@ -1,0 +1,46 @@
+name: Build
+
+# Run this workflow every time a new commit pushed to your repository
+on:
+  push:
+    branches: [ '**' ]
+    tags-ignore: [ '**' ]
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up JDK 8 for compiling Java 5 compatible bytecode
+        id: setup-java-8
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 8
+          java-package: jdk
+      - name: Set up JDK to support jigsaw module system
+        id: setup-java-21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 21
+          java-package: jdk
+      - name: Setup maven cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-repo-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2-repo-
+      - name: Perform build
+        run: ./mvnw clean verify sonar:sonar
+        shell: bash
+        env:
+          JAVA_8_HOME: ${{ steps.setup-java-8.outputs.path }}
+          JAVA_17_HOME: ${{ steps.setup-java-21.outputs.path }}
+          MAVEN_CLI_OPTS: --settings .github/mvn-settings.xml --global-toolchains .github/mvn-toolchains.xml
