@@ -43,4 +43,5 @@ jobs:
         env:
           JAVA_8_HOME: ${{ steps.setup-java-8.outputs.path }}
           JAVA_17_HOME: ${{ steps.setup-java-21.outputs.path }}
+          JAVA_21_HOME: ${{ steps.setup-java-21.outputs.path }}
           MAVEN_CLI_OPTS: --settings .github/mvn-settings.xml --global-toolchains .github/mvn-toolchains.xml
