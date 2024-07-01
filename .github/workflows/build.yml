@@ -45,7 +45,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2-repo-
       - name: Perform build
 #        run: ./mvnw --batch-mode clean verify sonar:sonar
-        run: ./mvnw --batch-mode --settings .github/mvn-settings.xml --global-toolchains .github/mvn-toolchains.xml clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=talsma-ict_enumerables
+        run: ./mvnw --batch-mode --settings .github/mvn-settings.xml --global-toolchains .github/mvn-toolchains.xml clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=talsma-ict_enumerables -Dsonar.organization=talsma-ict
         shell: bash
         env:
           JAVA_8_HOME: ${{ steps.setup-java-8.outputs.path }}
