@@ -39,7 +39,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2-repo-
       - name: Perform build
 #        run: ./mvnw --batch-mode clean verify sonar:sonar
-        run: ./mvnw --batch-mode --settings .github/mvn-settings.xml --global-toolchains .github/mvn-toolchains.xml clean verify org.sonarsource.scanner.maven:sonar
+        run: ./mvnw --batch-mode --settings .github/mvn-settings.xml --global-toolchains .github/mvn-toolchains.xml clean verify sonar:sonar
         shell: bash
         env:
           JAVA_8_HOME: ${{ steps.setup-java-8.outputs.path }}
