@@ -31,6 +31,12 @@ jobs:
           distribution: 'zulu'
           java-version: 17
           java-package: jdk
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Setup maven cache
         uses: actions/cache@v4
         with:
@@ -39,7 +45,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2-repo-
       - name: Perform build
 #        run: ./mvnw --batch-mode clean verify sonar:sonar
-        run: ./mvnw --batch-mode --settings .github/mvn-settings.xml --global-toolchains .github/mvn-toolchains.xml clean verify
+        run: ./mvnw --batch-mode --settings .github/mvn-settings.xml --global-toolchains .github/mvn-toolchains.xml clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=talsma-ict_enumerables
         shell: bash
         env:
           JAVA_8_HOME: ${{ steps.setup-java-8.outputs.path }}
