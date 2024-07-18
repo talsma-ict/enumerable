@@ -76,7 +76,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <jdkToolchain>
-                        <version>1.8</version>
+                        <!-- Since version 2.3.230 of H2, it requires Java 11. -->
+                        <version>[11,)</version>
                     </jdkToolchain>
                 </configuration>
             </plugin>
