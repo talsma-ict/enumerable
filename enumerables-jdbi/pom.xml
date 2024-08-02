@@ -33,7 +33,7 @@
         <project.moduleName>${project.groupId}.jdbi</project.moduleName>
         <root.basedir>${project.parent.basedir}</root.basedir>
         <jdbi.version>2.78</jdbi.version>
-        <h2db.version>2.2.224</h2db.version>
+        <h2db.version>2.3.230</h2db.version>
     </properties>
 
     <dependencies>
@@ -76,7 +76,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <jdkToolchain>
-                        <version>1.8</version>
+                        <!-- Since version 2.3.230 of H2, it requires Java 11. -->
+                        <version>[11,)</version>
                     </jdkToolchain>
                 </configuration>
             </plugin>
